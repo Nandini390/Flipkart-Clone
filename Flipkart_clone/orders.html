@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Flipkart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .flipkart-blue { background-color: #2874f0; }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="flipkart-blue sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-2">
+                <div class="flex items-center space-x-2">
+                    <a href="index.html" class="text-white">
+                        <div class="font-bold text-lg italic">Flipkart</div>
+                        <div class="text-xs">Explore <span class="text-yellow-300">Plus</span> <i class="fas fa-star text-yellow-300 text-xs"></i></div>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-6 text-white text-sm">
+                    <div class="flex items-center space-x-1">
+                        <i class="fas fa-user"></i>
+                        <span id="user-name">Account</span>
+                    </div>
+                    <a href="cart.html" class="flex items-center space-x-1">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3">
+            <nav class="text-sm">
+                <a href="index.html" class="text-blue-600 hover:underline">Home</a>
+                <span class="mx-2 text-gray-500">/</span>
+                <span class="text-gray-700">My Orders</span>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex">
+            <!-- Sidebar -->
+            <div class="w-1/4 mr-6">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium" id="sidebar-name">User</div>
+                                <div class="text-sm text-gray-500" id="sidebar-email">user@example.com</div>
+                            </div>
+                        </div>
+                        
+                        <nav class="space-y-2">
+                            <a href="orders.html" class="flex items-center space-x-3 p-3 bg-blue-50 text-blue-600 rounded-lg">
+                                <i class="fas fa-box"></i>
+                                <span>My Orders</span>
+                            </a>
+                            <a href="profile.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </a>
+                            <a href="addresses.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Addresses</span>
+                            </a>
+                            <a href="wishlist.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                                <i class="fas fa-heart"></i>
+                                <span>Wishlist</span>
+                            </a>
+                            <a href="#" onclick="logout()" class="flex items-center space-x-3 p-3 text-red-600 hover:bg-red-50 rounded-lg">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-1">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="p-6 border-b">
+                        <h1 class="text-2xl font-bold text-gray-800">My Orders</h1>
+                        <p class="text-gray-600">Track, return or buy things again</p>
+                    </div>
+
+                    <!-- Filter Tabs -->
+                    <div class="border-b">
+                        <div class="flex space-x-8 px-6">
+                            <button class="py-4 text-blue-600 border-b-2 border-blue-600 font-medium">All Orders</button>
+                            <button class="py-4 text-gray-600 hover:text-blue-600">On the way</button>
+                            <button class="py-4 text-gray-600 hover:text-blue-600">Delivered</button>
+                            <button class="py-4 text-gray-600 hover:text-blue-600">Cancelled</button>
+                            <button class="py-4 text-gray-600 hover:text-blue-600">Returned</button>
+                        </div>
+                    </div>
+
+                    <!-- Orders List -->
+                    <div id="orders-container" class="p-6">
+                        <!-- Orders will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="order-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold">Order Details</h2>
+                    <button onclick="closeOrderModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="order-modal-content" class="p-6">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/orders.js"></script>
+</body>
+</html>
